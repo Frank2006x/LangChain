@@ -13,7 +13,7 @@ def load_api_key()->str:
     load_dotenv()
     key=os.getenv("GOOGLE_API_KEY")
     if not key:
-        print("Key no found in env")
+        print("Key not found in env")
         sys.exit()
     return key
 
@@ -21,10 +21,10 @@ def pet_name(animal_type,pet_color):
     try:
         api_key=load_api_key()
         genai.configure(api_key=api_key)
-        llm=ChatGoogleGenerativeAI(model="gemini-2.5-flash",temperature=0.7)
+        llm=ChatGoogleGenerativeAI(model="gemini-1.5-flash",temperature=0.7)
         prompt_template_name=PromptTemplate(
             input_variables=["animal_type","pet_color"],
-            template="I have a {animal_type} pet.I want a cool name.It is {pet_color} in color.I suggest me 5 cool name for my pet.note filler just return 5 names"
+            template="I have a {animal_type} pet. I want a cool name. It is {pet_color} in color. Please suggest me 5 cool names for my pet. Return only the 5 names, one per line."
         )
         """Old way"""
         # name_chain=LLMChain(llm=llm,prompt=prompt_template_name)
